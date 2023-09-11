@@ -42,4 +42,32 @@ export class GamesService {
 
     return game;
   }
+
+  add(game) {
+    this.games.push(game);
+    return this.games[this.games.length - 1]
+  }
+
+  update(id: string, game) {
+    const gameIndex = this.games.findIndex((game) => game.id === id);
+
+    if (gameIndex === -1) {
+      throw new NotFoundException(`Game with id ${id} not found`);
+    }
+
+    this.games[gameIndex] = game;
+    return this.games[gameIndex];
+  }
+
+  remove(id: string) {
+    const gameIndex = this.games.findIndex((game) => game.id === id);
+
+    if (gameIndex === -1) {
+      throw new NotFoundException(`Game with id ${id} not found`);
+    }
+
+    const removedGame = this.games[gameIndex];
+    this.games.splice(gameIndex, 1);
+    return removedGame;
+  }
 }
